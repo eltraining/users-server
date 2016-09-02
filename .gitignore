@@ -1,5 +1,5 @@
-*.idea
-*.mvn
+*.idea/
+*.mvn/
 
 *.class
 
