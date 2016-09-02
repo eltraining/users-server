@@ -13,8 +13,8 @@ public class Application {
     public static List<User> userList = new ArrayList<User>();
 
     public static void main(String[] args) {
-        userList.add(new User(1,"Bob", "Morane", "ELCA"));
-        userList.add(new User(2,"Timo", "Babst", "ELCA"));
+        userList.add(new User("Bob", "Morane", "ELCA"));
+        userList.add(new User("Timo", "Babst", "ELCA"));
         SpringApplication.run(Application.class, args);
     }
 }

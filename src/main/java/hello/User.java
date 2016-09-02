@@ -1,23 +1,26 @@
 package hello;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
  * Created by TBB on 02.09.2016.
  */
 public class User {
-
+    private static final AtomicLong counter = new AtomicLong();
     private final long id;
     private final String name;
     private final String password;
     private final String group;
 
-    public User(long id, String name, String password, String group) {
-        this.id = id;
+    public User(String name, String password, String group) {
+
+        this.id = counter.incrementAndGet();
         this.name = name;
         this.password = password;
         this.group = group;
     }
 
-    public boolean isMe(String name, String password){
+    public boolean login(String name, String password){
         return this.name.equals(name) && this.password.equals(password);
     }
 
@@ -35,5 +38,15 @@ public class User {
 
     public String getGroup() {
         return group;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", group='" + group + '\'' +
+                '}';
     }
 }
