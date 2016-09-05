@@ -1,13 +1,14 @@
 package hello;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by TBB on 02.09.2016.
  */
 public class User {
-    private static final AtomicLong counter = new AtomicLong();
-    private final long id;
+    private static final AtomicInteger counter = new AtomicInteger();
+    private final int id;
     private final String name;
     private final String password;
     private final String group;
@@ -26,7 +27,7 @@ public class User {
         return this.name.equals(name) && this.password.equals(password);
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

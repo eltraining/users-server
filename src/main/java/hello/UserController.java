@@ -21,11 +21,11 @@ public class UserController {
     public Response login(@RequestParam(value="name", defaultValue="") String name, @RequestParam(value="password", defaultValue="") String password) {
 
         if(User.notLoggedIn.correspondsTo(name, password)){
-            return new Response(counter.incrementAndGet(), false, Application.db_test());
+            return new Response(counter.incrementAndGet(), false, Application.getUsersDB().toString());
             //return new Response(counter.incrementAndGet(), false,noParams);
         }
         else
-            for(User user: Application.userList){
+            for(User user: Application.getUsersDB()){
                 if(user.correspondsTo(name, password)){
                     return new Response(counter.incrementAndGet(), true,String.format(known,name,user.getId()));
             }
@@ -40,14 +40,14 @@ public class UserController {
         if (name.equals("") || password.equals("") || group.equals("")) {
             return new Response(counter.incrementAndGet(), false, "All fields must be non empty");
         } else {
-            for (User user : Application.userList) {
+            for (User user : Application.getUsersDB()) {
                 if (user.getName().equals(name)) {
                     return new Response(counter.incrementAndGet(), false, "Username already taken");
                 }
             }
             User newUser = new User(name, password, group);
-            Application.userList.add(newUser);
-            return new Response(counter.incrementAndGet(), true, String.format("Account for %s has been created under ID %s!" + Application.userList.toString(), name, newUser.getId()));
+            Application.addUserDB(newUser);
+            return new Response(counter.incrementAndGet(), true, String.format("Account for %s has been created under ID %s!", name, newUser.getId()));
         }
     }
 }
