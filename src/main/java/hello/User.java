@@ -12,6 +12,8 @@ public class User {
     private final String password;
     private final String group;
 
+    public static final User notLoggedIn = new User("", "", ""); //for faster access, this has been moved outside of userList
+
     public User(String name, String password, String group) {
 
         this.id = counter.incrementAndGet();
@@ -20,7 +22,7 @@ public class User {
         this.group = group;
     }
 
-    public boolean login(String name, String password){
+    public boolean correspondsTo(String name, String password){
         return this.name.equals(name) && this.password.equals(password);
     }
 
