@@ -14,7 +14,7 @@ import java.util.List;
 @SpringBootApplication
 public class Application {
 
-    private static String dbString = "jdbc:hsqldb:file:C:\\Users\\TBB\\tutorial_project\\\\users-server\\userDB";
+    private static String dbString = "jdbc:hsqldb:file:C:\\Users\\TBB\\tutorial_project\\\\users-server\\userDB\\DB";
 
 
     //public static List<User> userList = new ArrayList<User>();
@@ -43,7 +43,7 @@ public class Application {
             statement = connection.createStatement();
             resultSet = statement
                     .executeQuery("CREATE TABLE IF NOT EXISTS users (\n" +
-                            "  id INT NOT NULL,\n" +
+                            "  id INT IDENTITY,\n" +
                             "  name varchar(64),\n" +
                             "  password varchar(64),\n" +
                             "  ugroup varchar(64),\n" +
@@ -78,7 +78,7 @@ public class Application {
             resultSet = statement
                     .executeQuery("SELECT * FROM users ");
             while (resultSet.next()) {
-                result.add(new User(resultSet.getString("name"), resultSet.getString("password"), resultSet.getString("ugroup")));
+                result.add(new User(Integer.parseInt(resultSet.getString("id")),resultSet.getString("name"), resultSet.getString("password"), resultSet.getString("ugroup")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,12 +105,12 @@ public class Application {
                     dbString, "SA", "");
             // "jdbc:hsqldb:file:C:/JavaInstallation/HSQLDB/DB", "SA", "");
             //statement = connection.createStatement();
-            PreparedStatement pst=connection.prepareStatement("insert into users values(?,?,?,?)");
+            PreparedStatement pst=connection.prepareStatement("insert into users values(DEFAULT,?,?,?)");
             pst.clearParameters();
-            pst.setInt(1, user.getId());
-            pst.setString(2, user.getName());
-            pst.setString(3, user.getPassword());
-            pst.setString(4, user.getGroup());
+
+            pst.setString(1, user.getName());
+            pst.setString(2, user.getPassword());
+            pst.setString(3, user.getGroup());
             int i=pst.executeUpdate();
 
         } catch (Exception e) {

@@ -21,8 +21,8 @@ public class UserController {
     public Response login(@RequestParam(value="name", defaultValue="") String name, @RequestParam(value="password", defaultValue="") String password) {
 
         if(User.notLoggedIn.correspondsTo(name, password)){
-            return new Response(counter.incrementAndGet(), false, Application.getUsersDB().toString());
-            //return new Response(counter.incrementAndGet(), false,noParams);
+            //return new Response(counter.incrementAndGet(), false, Application.getUsersDB().toString());
+            return new Response(counter.incrementAndGet(), false,noParams);
         }
         else
             for(User user: Application.getUsersDB()){
@@ -47,7 +47,7 @@ public class UserController {
             }
             User newUser = new User(name, password, group);
             Application.addUserDB(newUser);
-            return new Response(counter.incrementAndGet(), true, String.format("Account for %s has been created under ID %s!", name, newUser.getId()));
+            return new Response(counter.incrementAndGet(), true, String.format("Account for %s has been created !", name));
         }
     }
 }
