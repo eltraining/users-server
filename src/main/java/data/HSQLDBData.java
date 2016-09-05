@@ -1,36 +1,26 @@
-package hello;
+package data;
 
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import app.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//libs for the DB
+/**
+ * Created by TBB on 05.09.2016.
+ *
+ *
+ */
+public class HSQLDBData implements Data{
+    private String dbLocation;
 
-
-@SpringBootApplication
-public class Application {
-
-    private static String dbString = "jdbc:hsqldb:file:C:\\Users\\TBB\\tutorial_project\\\\users-server\\userDB\\DB";
-
-
-    //public static List<User> userList = new ArrayList<User>();
-
-    public static void main(String[] args) {
-        prepareDB();
-        //userList.add(new User("Bob", "Morane", "ELCA"));
-        //userList.add(new User("Timo", "Babst", "ELCA"));
-        //addUserDB(new User("Bob", "Morane", "ELCA"));
-        //addUserDB(new User("Timo", "Babst", "ELCA"));
-
-        //db_test();
-        SpringApplication.run(Application.class, args);
+    public HSQLDBData(String dbLocation) {
+        this.dbLocation = dbLocation;
     }
 
-    public static void prepareDB(){
+    @Override
+    public void prepareDB(){
         Connection connection = null;
         ResultSet resultSet = null;
         Statement statement = null;
@@ -38,7 +28,7 @@ public class Application {
         try {
             Class.forName("org.hsqldb.jdbcDriver");
             connection = DriverManager.getConnection(
-                    dbString, "SA", "");
+                    dbLocation, "SA", "");
             // "jdbc:hsqldb:file:C:/JavaInstallation/HSQLDB/DB", "SA", "");
             statement = connection.createStatement();
             resultSet = statement
@@ -63,8 +53,8 @@ public class Application {
 
         }
     }
-
-    public static List<User> getUsersDB(){
+    @Override
+    public List<User> getUsersDB(){
         Connection connection = null;
         ResultSet resultSet = null;
         Statement statement = null;
@@ -72,7 +62,7 @@ public class Application {
         try {
             Class.forName("org.hsqldb.jdbcDriver");
             connection = DriverManager.getConnection(
-                    dbString, "SA", "");
+                    dbLocation, "SA", "");
             // "jdbc:hsqldb:file:C:/JavaInstallation/HSQLDB/DB", "SA", "");
             statement = connection.createStatement();
             resultSet = statement
@@ -93,8 +83,8 @@ public class Application {
             return result;
         }
     }
-
-    public static boolean addUserDB(User user){
+    @Override
+    public boolean addUserDB(User user){
         Connection connection = null;
         ResultSet resultSet = null;
         Statement statement = null;
@@ -102,7 +92,7 @@ public class Application {
         try {
             Class.forName("org.hsqldb.jdbcDriver");
             connection = DriverManager.getConnection(
-                    dbString, "SA", "");
+                    dbLocation, "SA", "");
             // "jdbc:hsqldb:file:C:/JavaInstallation/HSQLDB/DB", "SA", "");
             //statement = connection.createStatement();
             PreparedStatement pst=connection.prepareStatement("insert into users values(DEFAULT,?,?,?)");
@@ -127,35 +117,4 @@ public class Application {
             return result;
         }
     }
-
-    public static String db_test(){
-        Connection connection = null;
-        ResultSet resultSet = null;
-        Statement statement = null;
-        String result = "";
-        try {
-            Class.forName("org.hsqldb.jdbcDriver");
-            connection = DriverManager.getConnection(
-                    "jdbc:hsqldb:file:C:\\Users\\TBB\\tutorial_project\\DBtut2", "SA", "");
-            // "jdbc:hsqldb:file:C:/JavaInstallation/HSQLDB/DB", "SA", "");
-            statement = connection.createStatement();
-            resultSet = statement
-                    .executeQuery("SELECT Salary FROM SALARYDETAILS WHERE EmpID='54601A'");
-            while (resultSet.next()) {
-                result +=("EMPLOYEE Salary:"
-                        + resultSet.getString("Salary"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                statement.close();
-                connection.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return result;
-        }
-    }
-
 }

@@ -1,20 +1,23 @@
-package hello;
+package app;
 
-public class Greeting {
+public class Response {
 
     private final long id;
+    private final boolean ok;
     private final String content;
 
-    public Greeting(long id, String content) {
+    public Response(long id, boolean ok,String content) {
         this.id = id;
+        this.ok = ok;
         this.content = content;
     }
 
     public long getId() {
         return id;
     }
-
     public String getContent() {
         return content;
     }
+    public boolean isOk() {      return ok;    }
+
 }

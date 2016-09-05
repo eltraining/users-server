@@ -1,7 +1,4 @@
-package hello;
-
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
+package app;
 
 /**
  * Created by TBB on 02.09.2016.
